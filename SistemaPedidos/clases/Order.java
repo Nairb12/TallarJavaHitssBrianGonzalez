@@ -23,11 +23,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "{id: " + id 
-        + ", customer: " + customer 
-        + ", status: " + status +" -> "+status.getMensaje()
-        + ", priority=" + priority+ " (Nivel " + priority.ordinal() + ")"
-        + ", paymentMethod=" + paymentMethod + "}";
+        return "{id: #" + id 
+        + "\n, customer: " + customer 
+        + "\n, status: " + status +" -> "+status.getMensaje()
+        + "\n, priority=" + priority+ " (Nivel " + (priority.ordinal()+1) + ")"
+        + "\n, paymentMethod=" + paymentMethod + "}";
     }
     
 }

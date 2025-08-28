@@ -9,8 +9,8 @@ public class testMain {
         Order p2 = new Order("Luis", orderStatus.SHIPPED, orderPriority.MEDIUM, paymentMethod.CASH);
         Order p3 = new Order("Marta", orderStatus.DELIVERED, orderPriority.LOW, paymentMethod.TRANSFER);
 
-        p1.toString();
-        p2.toString();
-        p3.toString();
+        System.out.println(p1.toString());
+        System.out.println(p2.toString());
+        System.out.println(p3.toString());
     }
 }
