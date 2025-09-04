@@ -13,9 +13,8 @@ public abstract class Producto implements IProducto{
     public abstract double getPrecioVenta();
 
     @Override
-    public int getPrecio() {
+    public int getPrecio(){
         return precio;
     }
-    
     
 }
