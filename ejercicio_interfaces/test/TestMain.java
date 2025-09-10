@@ -10,11 +10,11 @@ public class TestMain {
     public static void main(String[] args) {
         IProducto[] productos = new IProducto[5];
 
-        productos[0] = new Iphone(15000, "Apple", "Negro", "14 Pro Max");
-        productos[1] = new TvLcd(8000, "Samsung", 55);
+        productos[0] = new Iphone(1500, "Apple", "Negro", "14 Pro Max");
+        productos[1] = new TvLcd(800, "Samsung", 55);
         productos[2] = new Libro(500, LocalDate.of(1967, 5, 30),"Gabriel García Márquez", "Cien Años de Soledad", "Sudamericana");
         productos[3] = new Comics(300,LocalDate.of(1962, 8, 10),"Stan Lee", "Spider-Man", "Marvel", "Peter Parker");
-        productos[4] = new Iphone(12000, "Apple", "Blanco", "13 Mini");
+        productos[4] = new Iphone(1200, "Apple", "Blanco", "13 Mini");
 
         for (IProducto p : productos) {
             System.out.println("====================================");
