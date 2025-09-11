@@ -13,8 +13,8 @@ public class Bolsa <T extends Producto>{
     }
 
     public void addProducto(T producto) {
-        if (productos.size()>5) {
-            throw new ArrayIndexOutOfBoundsException("No puedes agregar mas de 5 productos");
+        if (productos.size()>4) {
+            throw new IllegalStateException("No puedes agregar mas de 5 productos");
         }
         productos.add(producto);
     }
