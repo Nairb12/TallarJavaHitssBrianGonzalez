@@ -1,6 +1,8 @@
 package Ejercicio_Vuelos.clases;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Vuelo {
     private String nombre;
@@ -39,8 +41,9 @@ public class Vuelo {
 
     @Override
     public String toString() {
-        return nombre + ": " + origen + " → " + destino +
-                ", llega el " + fechaLlegada +
-                ", pasajeros: " + numPasajeros;
+            DateTimeFormatter salidaFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss yyyy", Locale.ENGLISH);
+        return "{ "+nombre + ": " + origen + " -> " + destino +
+                ", Aterriza el :" + fechaLlegada.format(salidaFormatter) +
+                ", pasajeros: " + numPasajeros+" }";
     }
 }

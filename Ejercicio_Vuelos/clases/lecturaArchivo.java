@@ -15,7 +15,7 @@ public class lecturaArchivo {
         String ruta = Paths.get(nombreArchivo).toAbsolutePath().toString();
 
         // Formatos de fecha y hora
-        DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.forLanguageTag("es-ES"));
+        DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd MMM yyyy", Locale.forLanguageTag("es-MX"));
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
 
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
@@ -28,7 +28,7 @@ public class lecturaArchivo {
                 String origen = datos[1].trim();
                 String destino = datos[2].trim();
 
-                String fechaTexto = datos[3].trim();
+                String fechaTexto = datos[3].substring(4).trim().toLowerCase();
                 String horaTexto = datos[4].replace("hrs", "").trim();
 
                 LocalTime hora = LocalTime.parse(horaTexto, formatterHora);
