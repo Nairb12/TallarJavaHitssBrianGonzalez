@@ -18,10 +18,10 @@ public class TestMain {
 
         // 3. Último vuelo en llegar
         Vuelo ultimo = vuelos.get(vuelos.size()-1);
-        System.out.println("\nÚltimo vuelo en llegar: " + ultimo);
+        System.out.println("\n Ultimo vuelo en llegar: " + ultimo);
 
         // 4. Vuelo con menor número de pasajeros
         Vuelo menor = Collections.min(vuelos, Comparator.comparingInt(Vuelo::getNumPasajeros));
-        System.out.println("\nVuelo con menor número de pasajeros: " + menor);
+        System.out.println("\n Vuelo con menor número de pasajeros: " + menor);
     }
 }

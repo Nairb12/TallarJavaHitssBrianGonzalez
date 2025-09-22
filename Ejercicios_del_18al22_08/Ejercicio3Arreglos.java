@@ -11,7 +11,8 @@ public class Ejercicio3Arreglos {
         n = sc.nextInt();
 
         if (n == 0) {
-            System.out.println("ERROR");
+            System.out.println("ERROR");                    
+            sc.close();
             return;
         }
         String[] matriz = new String[n];
