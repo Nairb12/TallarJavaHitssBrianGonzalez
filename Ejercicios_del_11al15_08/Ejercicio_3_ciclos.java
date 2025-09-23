@@ -16,6 +16,7 @@ public class Ejercicio_3_ciclos {
             // si la nota menor que 1 o mayor que 10 finaliza el programa
             if (nota < 0 || nota > 10) {
                 System.out.println("Error: nota erronea,rango de notas 1-10 programa finalizado.");
+                entrada.close();
                 return;
             }
             // se van sumando todas las notas, para el promedio general
