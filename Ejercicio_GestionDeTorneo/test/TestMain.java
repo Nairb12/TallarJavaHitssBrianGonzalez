@@ -1,13 +1,7 @@
 package Ejercicio_GestionDeTorneo.test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import Ejercicio_GestionDeTorneo.clases.Disciplina;
 import Ejercicio_GestionDeTorneo.clases.Jugador;
@@ -79,7 +73,7 @@ public class TestMain {
                     if (registrado) {
                         System.out.println("Jugador registrado con éxito.");
                     } else {
-                        System.out.println("El jugador ya está inscrito en esta disciplina.");
+                        System.out.println("El jugador"+j.getNombre()+"ya está inscrito en esta disciplina.");
                     }
                 }
                 case 1 -> {
@@ -136,7 +130,6 @@ public class TestMain {
                     System.out.print("Ingrese el ID del jugador a transferir de Básquetbol a Fútbol: ");
                     int idTransferir = sc.nextInt();
                     sc.nextLine(); // limpiar buffer
-
                     Jugador jugadorEncontrado = null;
                     for (Jugador j : basquet.getJugadores()) {
                         if (j.getId() == idTransferir) {
@@ -146,45 +139,118 @@ public class TestMain {
                     }
 
                     if (jugadorEncontrado != null) {
-                        futbol.registrarJugador(jugadorEncontrado);
+                        // Generar nuevo ID único para fútbol
+                        int nuevoId = jugadorEncontrado.getId();
+                        Set<Integer> idsExistentes = futbol.getJugadores().stream()
+                                .map(Jugador::getId)
+                                .collect(Collectors.toSet());
+
+                        while (idsExistentes.contains(nuevoId)) {
+                            nuevoId++; // Incrementa hasta encontrar un ID libre
+                        }
+
+                        // Crear nuevo jugador con mismo nombre pero nuevo ID
+                        Jugador jugadorNuevo = new Jugador(nuevoId, jugadorEncontrado.getNombre());
+
+                        // Registrar y eliminar
+                        futbol.registrarJugador(jugadorNuevo);
                         basquet.getJugadores().remove(jugadorEncontrado);
-                        System.out.println("Jugador " + jugadorEncontrado + " transferido a Fútbol.");
+
+                        System.out.println("Jugador " + jugadorEncontrado.getNombre() +
+                                " transferido a Fútbol con nuevo ID: " + nuevoId);
                     } else {
                         System.out.println("El jugador con ID " + idTransferir + " no está inscrito en Básquetbol.");
                     }
                 }
-                case 6 -> {//Ordenados por nombrre
-                    Set<Jugador> todosOrdenados = new TreeSet<>(Comparator.comparing(Jugador::getNombre));
-                    todosOrdenados.addAll(futbol.getJugadores());
-                    todosOrdenados.addAll(basquet.getJugadores());
-                    todosOrdenados.addAll(volei.getJugadores());
+                case 6 -> {// Ordenados por nombrre
 
-                    System.out.println("=== Jugadores ordenados por nombre con su disciplina ===");
-                    for (Jugador j : todosOrdenados) {
-                        String disciplina = "";
-                        if (futbol.getJugadores().contains(j))
-                            disciplina = "Fútbol";
-                        else if (basquet.getJugadores().contains(j))
-                            disciplina = "Básquetbol";
-                        else if (volei.getJugadores().contains(j))
-                            disciplina = "Vóleibol";
+                    List<String> nombres = new ArrayList<>();
+                    List<String> disciplinas = new ArrayList<>();
 
-                        System.out.println(j.getNombre() + " (" + disciplina + ")");
+                    // Recolectar nombres y disciplinas
+                    for (Jugador j : futbol.getJugadores()) {
+                        String nombre = j.getNombre();
+                        int index = nombres.indexOf(nombre);
+                        if (index == -1) {
+                            nombres.add(nombre);
+                            disciplinas.add("(Fútbol)");
+                        } else {
+                            disciplinas.set(index, disciplinas.get(index) + " (Fútbol)");
+                        }
                     }
+
+                    for (Jugador j : basquet.getJugadores()) {
+                        String nombre = j.getNombre();
+                        int index = nombres.indexOf(nombre);
+                        if (index == -1) {
+                            nombres.add(nombre);
+                            disciplinas.add("(Básquetbol)");
+                        } else if (!disciplinas.get(index).contains("Básquetbol")) {
+                            disciplinas.set(index, disciplinas.get(index) + " (Básquetbol)");
+                        }
+                    }
+
+                    for (Jugador j : volei.getJugadores()) {
+                        String nombre = j.getNombre();
+                        int index = nombres.indexOf(nombre);
+                        if (index == -1) {
+                            nombres.add(nombre);
+                            disciplinas.add("(Vóleibol)");
+                        } else if (!disciplinas.get(index).contains("Vóleibol")) {
+                            disciplinas.set(index, disciplinas.get(index) + " (Vóleibol)");
+                        }
+                    }
+
+                    // Combinar y ordenar por nombre
+                    List<String> salida = new ArrayList<>();
+                    for (int i = 0; i < nombres.size(); i++) {
+                        salida.add(nombres.get(i) + " " + disciplinas.get(i));
+                    }
+
+                    salida.sort(Comparator.naturalOrder());
+
+                    System.out.println("=== Jugadores ordenados por nombre con sus disciplinas ===");
+                    salida.forEach(System.out::println);
                 }
                 case 7 -> {
-                    Set<Jugador> inscripcion = new LinkedHashSet<>();
-                    inscripcion.addAll(futbol.getJugadores());
-                    inscripcion.addAll(basquet.getJugadores());
-                    inscripcion.addAll(volei.getJugadores());
-                    System.out.println("En orden de inscripción: " + inscripcion);
+                    System.out.println("=== Jugadores en orden de inscripción (simulada por disciplina) ===");
+                    Set<String> inscripcion = new LinkedHashSet<>();
+
+                    for (Jugador j : futbol.getJugadores()) {
+                        inscripcion.add(j.getNombre() + " (Fútbol)");
+                    }
+
+                    for (Jugador j : basquet.getJugadores()) {
+                        inscripcion.add(j.getNombre() + " (Básquetbol)");
+                    }
+
+                    for (Jugador j : volei.getJugadores()) {
+                        inscripcion.add(j.getNombre() + " (Vóleibol)");
+                    }
+
+                    inscripcion.forEach(System.out::println);
                 }
                 case 8 -> {
-                    TreeSet<Jugador> ranking = new TreeSet<>(Comparator.comparingInt(Jugador::getId));
-                    ranking.addAll(futbol.getJugadores());
-                    ranking.addAll(basquet.getJugadores());
-                    ranking.addAll(volei.getJugadores());
-                    System.out.println("Ranking por ID: " + ranking);
+                    System.out.println("=== Ranking de jugadores por ID (todas las disciplinas) ===");
+
+                    List<String> ranking = new ArrayList<>();
+
+                    for (Jugador j : futbol.getJugadores()) {
+                        ranking.add("ID: "+j.getId() + " - " + j.getNombre() + " (Fútbol)");
+                    }
+
+                    for (Jugador j : basquet.getJugadores()) {
+                        ranking.add("ID: "+j.getId() + " - " + j.getNombre() + " (Básquetbol)");
+                    }
+
+                    for (Jugador j : volei.getJugadores()) {
+                        ranking.add("ID: "+j.getId() + " - " + j.getNombre() + " (Vóleibol)");
+                    }
+
+                    // Ordenar por ID extraído del inicio de la cadena
+                    ranking.sort(Comparator.comparingInt(s -> Integer.parseInt(s.split(" ")[1])));
+
+                    ranking.forEach(System.out::println);
                 }
             }
         } while (opcion != 9);
