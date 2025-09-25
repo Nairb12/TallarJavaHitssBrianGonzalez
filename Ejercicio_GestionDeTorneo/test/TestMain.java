@@ -103,7 +103,7 @@ public class TestMain {
                         }
                     }
 
-                    System.out.println("Fusionados Básquetbol y Fútbol (sin nombres duplicados):");
+                    System.out.println("Fusionados Básquetbol y Fútbol:");
                     fusion.forEach(System.out::println);
                 }
                 case 4 -> {// Ver jugadores en comun
@@ -213,7 +213,7 @@ public class TestMain {
                     salida.forEach(System.out::println);
                 }
                 case 7 -> {
-                    System.out.println("=== Jugadores en orden de inscripción (simulada por disciplina) ===");
+                    System.out.println("=== Jugadores en orden de inscripción (por disciplina) ===");
                     Set<String> inscripcion = new LinkedHashSet<>();
 
                     for (Jugador j : futbol.getJugadores()) {
@@ -231,7 +231,7 @@ public class TestMain {
                     inscripcion.forEach(System.out::println);
                 }
                 case 8 -> {
-                    System.out.println("=== Ranking de jugadores por ID (todas las disciplinas) ===");
+                    System.out.println("=== Ranking de jugadores por ID ===");
 
                     List<String> ranking = new ArrayList<>();
 
