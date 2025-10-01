@@ -15,14 +15,14 @@ public class LibreriaService {
     private Predicate<Cliente> validarCliente = c -> c.getEdad() >= 18;
 
     // Transformar objetos con Function
-    private Function<Libro, String> resumenLibro = l -> "Resumen: " + l.getTitulo() + " de " + l.getAutor() +
-            " (" + l.getAnioPublicacion() + ") $" + l.getPrecio();
+    private Function<Libro, String> resumenLibro = l -> 
+    "Resumen: " + l.getTitulo() + " de " + l.getAutor() + " (" + l.getAnioPublicacion() + ") $" + l.getPrecio();
 
-    private Function<Venta, String> generarFactura = v -> "Factura {" + v.getCodigo() + "}\nCliente: "
+    private Function<Venta, String> generarFactura = v -> "Factura id{" + v.getCodigo() + "}\nCliente: "
             + v.getCliente().getNombre() +
             "\nLibro: " + v.getLibro().getTitulo() +
             "\nPrecio: $" + v.getLibro().getPrecio() +
-            "\nFecha: " + v.getFecha();
+            "\nFecha de venta: " + v.getFecha();
 
     // Acciones con Consumer
     private Consumer<String> notificar = msg -> System.out.println("Notificación: " + msg);

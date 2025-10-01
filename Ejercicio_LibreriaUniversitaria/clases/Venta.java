@@ -27,10 +27,10 @@ public class Venta {
 
     @Override
     public String toString() {
-        return "{ Venta numero " + codigo + 
+        return "{ Venta ID:  " + codigo + 
         " Cliente: " + cliente.getNombre() +
         " Libro: " + libro.getTitulo() +
-        " Fecha: " + fecha;
+        " Fecha de la venta: " + fecha +" }";
     }
 }
 

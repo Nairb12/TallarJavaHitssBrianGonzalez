@@ -64,7 +64,7 @@ public class TestMain {
         System.out.println("Fecha Venta 1: " + c1.getHistorialCompras().get(0).getFecha());
 
         // 6. Realizar cálculos --------------------------
-        System.out.println("\n=== CÁLCULOS ===");
+        System.out.println("\n=== CALCULOS ===");
         System.out.println("Promedio de precios: $" + libreria.promedioPrecios());
         System.out.println("Libro más caro: " + libreria.libroMasCaro());
         System.out.println("Libro más barato: " + libreria.libroMasBarato());
