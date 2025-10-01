@@ -18,7 +18,7 @@ public class LibreriaService {
     private Function<Libro, String> resumenLibro = l -> "Resumen: " + l.getTitulo() + " de " + l.getAutor() +
             " (" + l.getAnioPublicacion() + ") $" + l.getPrecio();
 
-    private Function<Venta, String> generarFactura = v -> "Factura [" + v.getCodigo() + "]\nCliente: "
+    private Function<Venta, String> generarFactura = v -> "Factura {" + v.getCodigo() + "}\nCliente: "
             + v.getCliente().getNombre() +
             "\nLibro: " + v.getLibro().getTitulo() +
             "\nPrecio: $" + v.getLibro().getPrecio() +
