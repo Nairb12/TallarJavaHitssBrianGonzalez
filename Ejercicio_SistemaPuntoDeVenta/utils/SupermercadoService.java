@@ -4,6 +4,7 @@ import Ejercicio_SistemaPuntoDeVenta.clases.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.*;
 
 public class SupermercadoService {
@@ -13,17 +14,17 @@ public class SupermercadoService {
         Predicate<Producto> pred = x -> x.getStock() < 5;
         productos.forEach(p -> {
             if (pred.test(p))
-            resultado.add("\n Producto: " + p.getNombre() + " | Stock: " + p.getStock());        
+                resultado.add("\n Producto: " + p.getNombre() + " | Stock: " + p.getStock());
         });
         return resultado;
     }
 
-    // 2. Calcular el total de una venta
+    // 2. Calcular el total de una venta (precio * cantidad)
     public double calcularTotal(Venta v) {
         Function<Venta, Double> func = x -> {
             double suma = 0;
-            for (Producto p : x.getProductos()) {
-                suma += p.getPrecio();
+            for (Map.Entry<Producto, Integer> entry : x.getProductos().entrySet()) {
+                suma += entry.getKey().getPrecio() * entry.getValue();
             }
             x.setTotal(suma);
             return suma;
@@ -31,14 +32,16 @@ public class SupermercadoService {
         return func.apply(v);
     }
 
-    // 3. Imprimir detalles de una venta
+    // 3. Imprimir detalles de la venta
     public void imprimirVenta(Venta v) {
         Consumer<Venta> cons = x -> {
-            System.out.println("=== DETALLE DE VENTA ===");
+            System.out.println("\n=== DETALLE DE VENTA ===");
             System.out.println("Cliente: " + x.getCliente().getNombre());
             System.out.println("Empleado: " + x.getEmpleado().getNombre());
-            for (Producto p : x.getProductos()) {
-                System.out.println(p);
+            for (Map.Entry<Producto, Integer> entry : x.getProductos().entrySet()) {
+                Producto p = entry.getKey();
+                int cantidad = entry.getValue();
+                System.out.println(p.getNombre() + " x" + cantidad + " = $" + (p.getPrecio() * cantidad));
             }
             System.out.println("TOTAL: $" + x.getTotal());
         };
@@ -69,12 +72,28 @@ public class SupermercadoService {
         return pred.test(c, total);
     }
 
-    // 8. Generar ticket de venta
-    public void generarTicket(Cliente c, Venta v) {
+    // 8.- Generar ticket y actualizar inventario del main
+    public void generarTicket(Cliente c, Venta v, List<Producto> inventario) {
         BiConsumer<Cliente, Venta> cons = (cli, ven) -> {
             System.out.println("=== TICKET DE VENTA ===");
             System.out.println("Cliente: " + cli.getNombre() + " (" + cli.getTipo() + ")");
-            System.out.println("Venta #" + ven.getId() + " Total: $" + ven.getTotal());
+            System.out.println("Venta #" + ven.getId());
+
+            for (Map.Entry<Producto, Integer> entry : ven.getProductos().entrySet()) {
+                Producto vendido = entry.getKey();
+                int cantidad = entry.getValue();
+                System.out.println(vendido.getNombre() + " x" + cantidad + " = $" + (vendido.getPrecio() * cantidad));
+
+                // Actualizar stock en inventario
+                for (Producto p : inventario) {
+                    if (p.getNombre().equals(vendido.getNombre())) {
+                        p.setStock(p.getStock() - cantidad);
+                    }
+                }
+            }
+
+            System.out.println("TOTAL: $" + ven.getTotal());
+            System.out.println("Inventario actualizado!");
         };
         cons.accept(c, v);
     }
