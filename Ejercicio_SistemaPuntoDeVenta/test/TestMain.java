@@ -14,6 +14,12 @@ public class TestMain {
         Producto p1 = new Producto("Leche", 25.0, 10);
         Producto p2 = new Producto("Pan", 15.0, 2);
         Producto p3 = new Producto("Carne", 200.0, 4);
+        Producto p4 = new Producto("Huevos", 40.0, 12);
+        Producto p5 = new Producto("Cereal", 35.0, 5);
+        Producto p6 = new Producto("Jugo", 18.0, 3);
+        Producto p7 = new Producto("Queso", 60.0, 7);
+        Producto p8 = new Producto("Yogurt", 22.0, 1);
+        Producto p9 = new Producto("Galletas", 20.0, 6);
 
         Cliente c1 = new Cliente("Juan", "Normal");
         Cliente c2 = new Cliente("Ana", "VIP");
@@ -21,6 +27,7 @@ public class TestMain {
         Empleado e1 = new Empleado("Pedro", "Cajero");
 
         // Crear venta
+        List<Producto> productos = Arrays.asList(p1, p2, p3,p4,p5,p6,p7,p8,p9);
         List<Producto> productosVenta = Arrays.asList(p1, p2, p3);
         Venta v1 = new Venta(c2, e1, productosVenta);
 
@@ -38,7 +45,7 @@ public class TestMain {
         service.notificarCliente(c2, e1);
 
         // Ejemplo de filtro stock bajo
-        System.out.println("¿El producto Pan tiene stock bajo?: " + service.stockBajo(p2));
+        System.out.println("Productos con stock <: " + service.filtrarStockBajo(productos));
 
         // Ejemplo descuento
         Producto pDescuento = service.aplicarDescuento(p3);

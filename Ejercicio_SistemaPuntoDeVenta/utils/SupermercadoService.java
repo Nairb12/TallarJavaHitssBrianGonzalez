@@ -1,13 +1,21 @@
 package Ejercicio_SistemaPuntoDeVenta.utils;
 
 import Ejercicio_SistemaPuntoDeVenta.clases.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.*;
 
 public class SupermercadoService {
     // 1. Filtrar productos con stock bajo (< 5)
-    public boolean stockBajo(Producto p) {
+    public List<String> filtrarStockBajo(List<Producto> productos) {
+        List<String> resultado = new ArrayList<>();
         Predicate<Producto> pred = x -> x.getStock() < 5;
-        return pred.test(p);
+        productos.forEach(p -> {
+            if (pred.test(p))
+            resultado.add("\n Producto: " + p.getNombre() + " | Stock: " + p.getStock());        
+        });
+        return resultado;
     }
 
     // 2. Calcular el total de una venta
